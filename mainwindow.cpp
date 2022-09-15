@@ -5,6 +5,7 @@
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->setFixedSize(this->width(), this->height());
 
     _handler = new JSONHandler(BASE_URL, DATABASE_FILE, this);
     QObject::connect(_handler->getManager(), SIGNAL(finished(QNetworkReply*)), this, SLOT(saveResult(QNetworkReply*)));
