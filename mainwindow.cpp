@@ -5,7 +5,11 @@
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->setFixedSize(this->width(), this->height());
+    //this->setFixedSize(this->width(), this->height());
+    ui->horizontalLayout->setStretch(0, 2);
+    ui->horizontalLayout->setStretch(1, 3);
+    /*for (int i = 0 ; i < 4; i++ )
+        ui->verticalLayout->setStretch(i, 1);*/
 
     _handler = new JSONHandler(BASE_URL, DATABASE_FILE, this);
     QObject::connect(_handler->getManager(), SIGNAL(finished(QNetworkReply*)), this, SLOT(saveResult(QNetworkReply*)));
