@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QTimer>
 #include <QSqlTableModel>
+#include <QMessageBox>
 #include "JSONHandler.h"
 
 #define BASE_URL "http://localhost:3189"
@@ -26,11 +27,12 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButton_clicked();
+    void on_saveStatsBtn_clicked();
     void saveResult(QNetworkReply *reply);
     void get();
     void slotTimerAlarm();
-    void on_pushButton_2_clicked();
+    void on_resetTimerBtn_clicked();
+    void on_changeHostBtn_clicked();
 
 private:
     void setupModel(const QString &tableName, const QStringList &headers);

@@ -61,3 +61,9 @@ QList<Statistics> JSONHandler::getStatistics()
     }
     return resources;
 }
+
+
+void JSONHandler::changeHost(QString url)
+{
+    _url = url;
+}

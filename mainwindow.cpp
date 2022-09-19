@@ -5,11 +5,8 @@
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    //this->setFixedSize(this->width(), this->height());
     ui->horizontalLayout->setStretch(0, 2);
-    ui->horizontalLayout->setStretch(1, 3);
-    /*for (int i = 0 ; i < 4; i++ )
-        ui->verticalLayout->setStretch(i, 1);*/
+    ui->horizontalLayout->setStretch(1, 5);
 
     _handler = new JSONHandler(BASE_URL, DATABASE_FILE, this);
     QObject::connect(_handler->getManager(), SIGNAL(finished(QNetworkReply*)), this, SLOT(saveResult(QNetworkReply*)));
@@ -44,8 +41,13 @@ MainWindow::~MainWindow()
 
 void MainWindow::saveResult(QNetworkReply *reply)
 {
-    _handler->saveResult(reply);
-    _model->select();
+    if (reply->error() != QNetworkReply::NoError)
+        QMessageBox::information(this, "Error", reply->errorString());
+    else
+    {
+        _handler->saveResult(reply);
+        _model->select();
+    }
 }
 
 
@@ -89,6 +91,7 @@ void MainWindow::createUI()
     ui->tableView->horizontalHeader()->setStretchLastSection(true);
 }
 
+
 QTime MainWindow::timeDif(const QTime &t1, const QTime &t2)
 {
     int diff = t2.msecsTo(t1);
@@ -99,16 +102,25 @@ QTime MainWindow::timeDif(const QTime &t1, const QTime &t2)
 }
 
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_saveStatsBtn_clicked()
 {
     _handler->getRequest("/v1.0/lm/dongles/products/features");
 }
 
 
-void MainWindow::on_pushButton_2_clicked()
+void MainWindow::on_resetTimerBtn_clicked()
 {
     _startTime = QTime().currentTime();
     _delay = ui->timeEdit->time();
     _timer->start(_delay.minute() * MIN_MS + _delay.second() * SEC_MS + _delay.msec());
 }
+
+
+void MainWindow::on_changeHostBtn_clicked()
+{
+    QString baseURL = ui->lineEdit->text();
+    _handler->changeHost(baseURL);
+}
+
+
 

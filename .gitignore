@@ -82,3 +82,4 @@ usersarsenappdatalocaltemp*
 *.pro.user
 .qtc_clangd
 *.db
+msvc_make.bat

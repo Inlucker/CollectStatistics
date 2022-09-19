@@ -25,6 +25,7 @@ public:
     void getRequest(QString request);
     void saveResult(QNetworkReply* reply);
     QList<Statistics> getStatistics();
+    void changeHost(QString url);
 
 private:
     QString _url;
